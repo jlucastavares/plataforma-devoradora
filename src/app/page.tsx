@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main className="min-h-screen pt-20 flex flex-col items-center justify-center">
       <h1 className="text-5xl font-bold mb-8 uppercase tracking-wider">
         A <span className="text-neon-orange">Devoradora</span> chegou.
       </h1>
