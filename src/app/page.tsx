@@ -14,7 +14,7 @@ export default function Home() {
         <div className="relative w-[800px] h-[800px]">
           <Image 
             src="/logo-devoradora.png" 
-            alt="Fundo"
+            alt="Fundo" 
             fill 
             className="object-contain grayscale"
           />
