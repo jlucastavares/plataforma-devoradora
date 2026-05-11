@@ -1,0 +1,63 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Tabela de Usuários/Sócios
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  image         String?   // Foto do sócio
+  isSocio       Boolean   @default(false)
+  role          String    @default("USER") // USER ou ADMIN
+  
+  // Relacionamento com Assinatura
+  subscription  Subscription?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Tabela de Assinaturas (Sistema de Sócios)
+model Subscription {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  status      String   @default("INACTIVE") // ACTIVE, INACTIVE, PENDING
+  pixCode     String?  // QR Code do último pagamento
+  expiresAt   DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Tabela de Produtos (Loja)
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  image       String
+  category    String   // Camisa, Caneca, Tirante...
+  stock       Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+}
+
+// Tabela de Agenda (Jogos e Eventos)
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  type        String   // JOGO, FESTA, TREINO
+  
+  createdAt   DateTime @default(now())
+}
