@@ -25,7 +25,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              A maior do interior. <br />
+              A maior da UFPE. <br />
               A.A.A. Nutrição - UFPE. <br />
               Garra, tradição e Nutrição.
             </p>
@@ -77,7 +77,7 @@ export default function Footer() {
             © {currentYear} A.A.A. Nutrição UFPE. Todos os direitos reservados.
           </p>
           <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em]">
-            Desenvolvido por <span className="text-neon-orange font-bold">Diretoria de TI - Devoradora</span>
+            Desenvolvido por <span className="text-neon-orange font-bold">Diretorias - Devoradora</span>
           </p>
         </div>
       </div>

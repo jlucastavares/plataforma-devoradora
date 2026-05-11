@@ -32,7 +32,7 @@ export default function Home() {
         </h1>
 
         <p className="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
-          Garra, tradição e Nutrição. Junte-se à maior do interior e tenha acesso a produtos exclusivos, treinos e eventos épicos.
+          Garra, tradição e Nutrição. Junte-se à maior da UFPE e tenha acesso a produtos exclusivos, treinos e eventos épicos.
         </p>
 
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center">

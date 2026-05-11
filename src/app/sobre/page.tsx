@@ -40,7 +40,7 @@ export default async function Sobre() {
           
           <div>
             <h2 className="text-3xl font-bold uppercase tracking-tight mb-6 border-l-4 border-neon-orange pl-4">
-              A Maior do Interior
+              A Maior da UFPE
             </h2>
             <div className="space-y-4 text-gray-300 leading-relaxed">
               <p>
