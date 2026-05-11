@@ -1,41 +1,80 @@
-import Link from 'next/link';
-import Image from 'next/image';
+"use client"; // Isso é obrigatório no topo para o React saber que o componente tem interatividade
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
+  // Estado para controlar se o menu mobile está aberto ou fechado
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Função para inverter o estado (abrir/fechar)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
-    <header className="fixed top-0 w-full z-50 bg-dark/80 backdrop-blur-md border-b border-neon-orange/20">
+    <header className="fixed top-0 w-full bg-dark/90 backdrop-blur-md z-50 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
+          
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="relative w-10 h-10 overflow-hidden rounded-full border border-neon-orange/50 group-hover:border-neon-orange transition-colors">
+              <Image src="/logo-devoradora.png" alt="Logo Devoradora" fill className="object-cover" />
+            </div>
+            <span className="font-black text-xl tracking-tighter uppercase text-white group-hover:text-neon-orange transition-colors">
+              Devora<span className="text-neon-orange group-hover:text-white transition-colors">dora</span>
+            </span>
+          </Link>
 
-          {/* Logo e Nome */}
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110">
-                <Image
-                  src="/logo-devoradora.png"
-                  alt="Logo Devoradora"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-xl font-black tracking-tighter uppercase">
-                Devora<span className="text-neon-orange">dora</span>
-              </span>
-            </Link>
+          {/* Desktop Menu (Escondido no mobile) */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange transition-colors">Início</Link>
+            <Link href="/sobre" className="text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange transition-colors">A Atlética</Link>
+            <Link href="/agenda" className="text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange transition-colors">Agenda</Link>
+            <Link href="/loja" className="text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange transition-colors">Loja</Link>
+          </nav>
+
+          {/* Área de Login/Sócio (Escondido no mobile) */}
+          <div className="hidden md:flex items-center gap-4">
+             <Link href="/login" className="text-sm font-bold uppercase tracking-widest text-white hover:text-neon-orange transition-colors">Entrar</Link>
+             <Link href="/cadastro" className="bg-neon-orange text-white px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest hover:shadow-neon-orange transition-all active:scale-95">Seja Sócio</Link>
           </div>
 
-          {/* Navegação Desktop */}
-          <nav className="hidden md:flex space-x-8 items-center">
-            <Link href="/" className="hover:text-neon-orange transition-colors font-medium uppercase text-sm tracking-widest">Início</Link>
-            <Link href="/sobre" className="hover:text-neon-orange transition-colors font-medium uppercase text-sm tracking-widest">A Atlética</Link>
-            <Link href="/loja" className="hover:text-neon-orange transition-colors font-medium uppercase text-sm tracking-widest">Loja</Link>
-            <Link href="/agenda" className="hover:text-neon-orange transition-colors font-medium uppercase text-sm tracking-widest">Agenda</Link>
-
-            <Link href="/login" className="border border-neon-orange text-neon-orange px-6 py-2 rounded-full hover:bg-neon-orange hover:text-white transition-all duration-300 font-bold uppercase text-xs tracking-widest shadow-neon-orange">
-              Sou Sócio
-            </Link>
-          </nav>
+          {/* Mobile Menu Button (Menu Hambúrguer) */}
+          <button 
+            onClick={toggleMenu}
+            className="md:hidden text-gray-300 hover:text-neon-orange focus:outline-none"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> // Ícone de X (fechar)
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /> // Ícone Hambúrguer
+              )}
+            </svg>
+          </button>
         </div>
+      </div>
+
+      {/* Mobile Menu Dropdown (Animado) */}
+      <div 
+        className={`md:hidden absolute w-full left-0 top-20 bg-[#111111] border-b border-white/5 shadow-xl transition-all duration-300 ease-in-out origin-top ${
+          isMenuOpen 
+            ? "opacity-100 translate-y-0 pointer-events-auto visible" 
+            : "opacity-0 -translate-y-4 pointer-events-none invisible"
+        }`}
+      >
+        <nav className="flex flex-col px-4 pt-2 pb-6 space-y-4">
+          <Link href="/" onClick={toggleMenu} className="block px-3 py-2 rounded-md text-base font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange hover:bg-white/5 transition-colors">Início</Link>
+          <Link href="/sobre" onClick={toggleMenu} className="block px-3 py-2 rounded-md text-base font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange hover:bg-white/5 transition-colors">A Atlética</Link>
+          <Link href="/agenda" onClick={toggleMenu} className="block px-3 py-2 rounded-md text-base font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange hover:bg-white/5 transition-colors">Agenda</Link>
+          <Link href="/loja" onClick={toggleMenu} className="block px-3 py-2 rounded-md text-base font-bold uppercase tracking-widest text-gray-300 hover:text-neon-orange hover:bg-white/5 transition-colors">Loja</Link>
+          
+          <div className="border-t border-white/10 pt-4 mt-2 flex flex-col gap-3">
+            <Link href="/login" onClick={toggleMenu} className="block px-3 py-2 text-center rounded-md text-base font-bold uppercase tracking-widest text-white hover:text-neon-orange border border-white/10 transition-colors">Entrar</Link>
+            <Link href="/cadastro" onClick={toggleMenu} className="block px-3 py-3 text-center rounded-md text-base font-black uppercase tracking-widest bg-neon-orange text-white active:scale-95 transition-transform">Seja Sócio</Link>
+          </div>
+        </nav>
       </div>
     </header>
   );
