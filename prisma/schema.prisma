@@ -61,3 +61,12 @@ model Event {
   
   createdAt   DateTime @default(now())
 }
+
+model Member {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   // Ex: Presidência, Esportes, Comunicação...
+  image     String?  // URL da foto (opcional)
+  order     Int      @default(0) // Para ordenar quem aparece primeiro
+  createdAt DateTime @default(now())
+}
