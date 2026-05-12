@@ -9,45 +9,41 @@ generator client {
 
 // Tabela de Usuários/Sócios
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  password      String
-  image         String?   // Foto do sócio
-  isSocio       Boolean   @default(false)
-  role          String    @default("USER") // USER ou ADMIN
-  
-  // Relacionamento com Assinatura
-  subscription  Subscription?
-  
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id           String        @id @default(cuid())
+  name         String?
+  email        String?       @unique
+  password     String? // Adicionamos para salvar a senha
+  cpf          String?       @unique // CPF único para cada sócio
+  course       String? // Curso do aluno
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  subscription Subscription?
 }
 
 // Tabela de Assinaturas (Sistema de Sócios)
 model Subscription {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
-  status      String   @default("INACTIVE") // ACTIVE, INACTIVE, PENDING
-  pixCode     String?  // QR Code do último pagamento
-  expiresAt   DateTime?
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String    @id @default(cuid())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  status    String    @default("INACTIVE") // ACTIVE, INACTIVE, PENDING
+  pixCode   String? // QR Code do último pagamento
+  expiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Tabela de Produtos (Loja)
 model Product {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   name        String
   description String
   price       Float
   image       String
-  category    String   // Camisa, Caneca, Tirante...
-  stock       Int      @default(0)
-  
-  createdAt   DateTime @default(now())
+  category    String // Camisa, Caneca, Tirante...
+  stock       Int    @default(0)
+
+  createdAt DateTime @default(now())
 }
 
 // Tabela de Agenda (Jogos e Eventos)
@@ -57,16 +53,16 @@ model Event {
   description String
   date        DateTime
   location    String
-  type        String   // JOGO, FESTA, TREINO
-  
-  createdAt   DateTime @default(now())
+  type        String // JOGO, FESTA, TREINO
+
+  createdAt DateTime @default(now())
 }
 
 model Member {
   id        String   @id @default(cuid())
   name      String
-  role      String   // Ex: Presidência, Esportes, Comunicação...
-  image     String?  // URL da foto (opcional)
+  role      String // Ex: Presidência, Esportes, Comunicação...
+  image     String? // URL da foto (opcional)
   order     Int      @default(0) // Para ordenar quem aparece primeiro
   createdAt DateTime @default(now())
 }
